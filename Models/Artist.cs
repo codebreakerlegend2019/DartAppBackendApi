@@ -15,10 +15,10 @@ namespace DartAppSingapore.Models
         public DateTime Birthdate { get; set; }
         public DateTime DateTimeCreated { get; set; }
         public bool IsEnabled { get; set; }
-        public virtual ICollection<Artwork> ArtWorks { get; set; }
+        public virtual ICollection<ArtistArtwork> ArtistArtworks { get; set; }
         public Artist()
         {
-            ArtWorks = new Collection<Artwork>();
+            ArtistArtworks = new Collection<ArtistArtwork>();
         }
     }
 }

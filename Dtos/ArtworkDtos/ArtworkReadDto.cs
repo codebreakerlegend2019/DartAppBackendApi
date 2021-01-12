@@ -1,22 +1,18 @@
-﻿using System;
+﻿using DartAppSingapore.Dtos.ArtistDtos;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DartAppSingapore.Models
+namespace DartAppSingapore.Dtos.ArtworkDtos
 {
-    public class Artwork
+    public class ArtworkReadDto
     {
         public int Id { get; set; }
         public string Title { get; set; }
         public string Notes { get; set; }
         public DateTime DateTimeCreated { get; set; }
         public bool IsEnabled { get; set; }
-        public virtual ICollection<ArtistArtwork> ArtistArtworks { get; set; }
-        public Artwork()
-        {
-            ArtistArtworks = new Collection<ArtistArtwork>();
-        }
+        public List<ArtistWithoutArtworkReadDto> Artists { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace DartAppSingapore.Helpers
             services.AddHttpContextAccessor();
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
         }
-        public static void AutoRegisterByInterFaceName(this IServiceCollection containerRegistry, string interfaceName)
+        public static void AutoRegisterByInterfaceName(this IServiceCollection containerRegistry, string interfaceName)
         {
             var classes = GetClasseseOfAnInterface(interfaceName);
             foreach (var classs in classes)

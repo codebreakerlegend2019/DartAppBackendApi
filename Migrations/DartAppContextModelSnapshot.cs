@@ -49,25 +49,19 @@ namespace DartAppSingapore.Migrations
                     b.ToTable("Artists");
                 });
 
-            modelBuilder.Entity("DartAppSingapore.Models.ArtistGroup", b =>
+            modelBuilder.Entity("DartAppSingapore.Models.ArtistArtwork", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                    b.Property<int>("ArtworkId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("DateTimeCreated")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("ArtistId")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("IsEnabled")
-                        .HasColumnType("bit");
+                    b.HasKey("ArtworkId", "ArtistId");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasIndex("ArtistId");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("ArtistGroups");
+                    b.ToTable("ArtistArtworks");
                 });
 
             modelBuilder.Entity("DartAppSingapore.Models.Artwork", b =>
@@ -76,9 +70,6 @@ namespace DartAppSingapore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
-
-                    b.Property<int>("ArtistId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("DateTimeCreated")
                         .HasColumnType("datetime2");
@@ -93,8 +84,6 @@ namespace DartAppSingapore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ArtistId");
 
                     b.ToTable("ArtWorks");
                 });
@@ -135,20 +124,33 @@ namespace DartAppSingapore.Migrations
                     b.ToTable("Profiles");
                 });
 
-            modelBuilder.Entity("DartAppSingapore.Models.Artwork", b =>
+            modelBuilder.Entity("DartAppSingapore.Models.ArtistArtwork", b =>
                 {
                     b.HasOne("DartAppSingapore.Models.Artist", "Artist")
-                        .WithMany("ArtWorks")
+                        .WithMany("ArtistArtworks")
                         .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DartAppSingapore.Models.Artwork", "Artwork")
+                        .WithMany("ArtistArtworks")
+                        .HasForeignKey("ArtworkId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Artist");
+
+                    b.Navigation("Artwork");
                 });
 
             modelBuilder.Entity("DartAppSingapore.Models.Artist", b =>
                 {
-                    b.Navigation("ArtWorks");
+                    b.Navigation("ArtistArtworks");
+                });
+
+            modelBuilder.Entity("DartAppSingapore.Models.Artwork", b =>
+                {
+                    b.Navigation("ArtistArtworks");
                 });
 #pragma warning restore 612, 618
         }
