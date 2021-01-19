@@ -11,5 +11,11 @@ namespace DartAppSingapore.Models
         public string Name { get; set; }
         public DateTime DateTimeCreated { get; set; }
         public bool IsEnabled { get; set; }
+        public ArtistGroup()
+        {
+
+            IsEnabled = true;
+            DateTimeCreated = DateTime.Now;
+        }
     }
 }

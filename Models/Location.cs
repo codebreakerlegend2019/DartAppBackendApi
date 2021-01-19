@@ -16,5 +16,10 @@ namespace DartAppSingapore.Models
         public virtual Zone Zone { get; set; }
         public DateTime DateTimeCreated { get; set; }
         public bool IsEnabled { get; set; }
+        public Location()
+        {
+            IsEnabled = true;
+            DateTimeCreated = DateTime.Now;
+        }
     }
 }

@@ -17,6 +17,8 @@ namespace DartAppSingapore.Models
         public virtual ICollection<ArtistArtwork> ArtistArtworks { get; set; }
         public Artwork()
         {
+            IsEnabled = true;
+            DateTimeCreated = DateTime.Now;
             ArtworkEvents = new Collection<ArtworkEvent>();
             ArtistArtworks = new Collection<ArtistArtwork>();
         }

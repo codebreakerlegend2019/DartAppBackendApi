@@ -16,5 +16,10 @@ namespace DartAppSingapore.Models
         public bool IsFromGoogle { get; set; }
         public bool IsEnabled { get; set; }
         public DateTime DateTimCreated { get; set; }
+        public Profile()
+        {
+            IsEnabled = true;
+            DateTimeCreated = DateTime.Now;
+        }
     }
 }
