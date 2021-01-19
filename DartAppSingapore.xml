@@ -114,18 +114,21 @@
         </member>
         <member name="M:DartAppSingapore.Controllers.VenueController.Create(DartAppSingapore.Dtos.VenueDtos.VenueSaveDto)">
             <summary>
+            Create a Venue
             </summary>
             <param name="venueSaveDto"></param>
             <returns></returns>
         </member>
         <member name="M:DartAppSingapore.Controllers.VenueController.GetAll(System.Boolean)">
             <summary>
+            Get All Venue with/ w/o Location
             </summary>
             <param name="isLocationIncluded"></param>
             <returns></returns>
         </member>
         <member name="M:DartAppSingapore.Controllers.VenueController.GetAll(System.Int32,System.Boolean)">
             <summary>
+            Get Venue By Id with/ w/o Location
             </summary>
             <param name="id"></param>
             <param name="isLocationIncluded"></param>
@@ -133,12 +136,48 @@
         </member>
         <member name="M:DartAppSingapore.Controllers.VenueController.Update(DartAppSingapore.Dtos.VenueDtos.VenueUpdateDto)">
             <summary>
+            Update Venue
             </summary>
             <param name="venueUpdateDto"></param>
             <returns></returns>
         </member>
         <member name="M:DartAppSingapore.Controllers.VenueController.Delete(System.Int32)">
             <summary>
+            Delete a Venue
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.ZoneController.Create(DartAppSingapore.Dtos.ZoneDtos.ZoneSaveDto)">
+            <summary>
+            Create a Zone
+            </summary>
+            <param name="zoneSaveDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.ZoneController.GetAll">
+            <summary>
+            Get All Zones 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.ZoneController.GetById(System.Int32)">
+            <summary>
+            Get Zone by id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.ZoneController.Update(DartAppSingapore.Dtos.ZoneDtos.ZoneUpdateDto)">
+            <summary>
+            Update Zone
+            </summary>
+            <param name="zoneUpdateDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.ZoneController.Delete(System.Int32)">
+            <summary>
+            Delete Zone 
             </summary>
             <param name="id"></param>
             <returns></returns>

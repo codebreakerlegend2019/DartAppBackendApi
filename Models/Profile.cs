@@ -15,11 +15,11 @@ namespace DartAppSingapore.Models
         public bool IsFromFacebook { get; set; }
         public bool IsFromGoogle { get; set; }
         public bool IsEnabled { get; set; }
-        public DateTime DateTimCreated { get; set; }
+        public DateTime DateTimeCreated { get; set; }
         public Profile()
         {
             IsEnabled = true;
-            DateTimCreated = DateTime.Now;
+            DateTimeCreated = DateTime.Now;
         }
     }
 }
