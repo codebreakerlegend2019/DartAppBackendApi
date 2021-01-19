@@ -30,13 +30,13 @@ namespace DartAppSingapore.Persistence.ArtistRepositories
             _context.Remove(model);
         }
 
-        public async Task<Artist> Get(int id)
+        public async Task<Artist> Get(int id, bool isReferenceIncluded = false)
         {
             return await _context.Artists
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<List<Artist>> GetAll()
+        public async Task<List<Artist>> GetAll(bool isReferenceIncluded = false)
         {
             return await _context.Artists
                 .Include(x=>x.ArtistArtworks)

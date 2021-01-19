@@ -1,8 +1,11 @@
 using AutoMapper;
 using DartAppSingapore.DataContexts;
 using DartAppSingapore.Helpers;
+using DartAppSingapore.Models;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -56,6 +59,25 @@ namespace DartAppSingapore
             });
             services.AddControllersWithViews();
             services.ConfigureCors();
+            services.AddMvc()
+            .ConfigureApiBehaviorOptions(options=> 
+            {
+                options.InvalidModelStateResponseFactory = actionContext =>
+                {
+                    var errorInModelState = actionContext.ModelState
+                       .Where(x => x.Value.Errors.Count > 0)
+                       .ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Errors.Select(x => x.ErrorMessage))
+                       .ToArray();
+
+                    var errorResponse = new List<Error>();
+
+                    foreach (var errors in errorInModelState)
+                        foreach (var subError in errors.Value)
+                            errorResponse.Add(new Error(subError));
+                    return new BadRequestObjectResult(errorResponse);
+                };
+            })
+            .AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<Startup>());
         }
         
 

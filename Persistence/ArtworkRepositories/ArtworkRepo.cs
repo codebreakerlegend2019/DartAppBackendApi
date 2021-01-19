@@ -48,13 +48,13 @@ namespace DartAppSingapore.Persistence.ArtworkRepositories
             _context.Remove(model);
         }
 
-        public async Task<Artwork> Get(int id)
+        public async Task<Artwork> Get(int id, bool isReferenceIncluded = false)
         {
             return await _context.ArtWorks
                  .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<List<Artwork>> GetAll()
+        public async Task<List<Artwork>> GetAll(bool isReferenceIncluded = false)
         {
             return await _context.ArtWorks
                 .ToListAsync();

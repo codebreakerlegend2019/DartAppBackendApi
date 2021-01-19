@@ -5,12 +5,9 @@ using System.Threading.Tasks;
 
 namespace DartAppSingapore.Interfaces
 {
-    public interface ICrud<T> where T: class
+    public interface ICud<T> where T : class
     {
-        Task<List<T>> GetAll(bool isReferenceIncluded = false);
-        Task<T> Get(int id, bool isReferenceIncluded = false);
         void Create(T model);
-
         void Delete(T model);
         void Update(object newUpdate, T modelToBeUpdated);
     }
