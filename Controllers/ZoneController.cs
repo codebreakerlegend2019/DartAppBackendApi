@@ -32,6 +32,11 @@ namespace DartAppSingapore.Controllers
         }
         #endregion
         #region Endpoints
+        /// <summary>
+        /// Create a Zone
+        /// </summary>
+        /// <param name="zoneSaveDto"></param>
+        /// <returns></returns>
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] ZoneSaveDto zoneSaveDto)
         {
@@ -41,6 +46,10 @@ namespace DartAppSingapore.Controllers
                 return BadRequest(ErrorHelper.PutError("Nothing has been saved"));
             return StatusCode(201);
         }
+        /// <summary>
+        /// Get All Zones 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet()]
         public async Task<IActionResult> GetAll()
         {
@@ -49,6 +58,11 @@ namespace DartAppSingapore.Controllers
                 return NoContent();
             return Ok(_mapper.Map<List<ZoneReadDto>>(zones));
         }
+        /// <summary>
+        /// Get Zone by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
@@ -57,6 +71,11 @@ namespace DartAppSingapore.Controllers
                 return NotFound();
             return Ok(_mapper.Map<ZoneReadDto>(zone));
         }
+        /// <summary>
+        /// Update Zone
+        /// </summary>
+        /// <param name="zoneUpdateDto"></param>
+        /// <returns></returns>
         [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] ZoneUpdateDto zoneUpdateDto)
         {
@@ -69,6 +88,11 @@ namespace DartAppSingapore.Controllers
             return Ok(zone);
 
         }
+        /// <summary>
+        /// Delete Zone 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {

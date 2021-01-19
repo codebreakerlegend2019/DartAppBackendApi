@@ -47,13 +47,13 @@ namespace DartAppSingapore.Migrations
                         column: x => x.ArtworkId,
                         principalTable: "ArtWorks",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_ArtworkEvent_Events_EventId",
                         column: x => x.EventId,
                         principalTable: "Events",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
@@ -67,7 +67,7 @@ namespace DartAppSingapore.Migrations
                 column: "ArtistId",
                 principalTable: "Artists",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.NoAction);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_ArtistArtwork_ArtWorks_ArtworkId",
@@ -75,7 +75,7 @@ namespace DartAppSingapore.Migrations
                 column: "ArtworkId",
                 principalTable: "ArtWorks",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.NoAction);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

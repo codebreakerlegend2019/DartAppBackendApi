@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DartAppSingapore.Dtos.ArtworkDtos
 {
-    public class ArtworkReadDto
+    public class ArtworkWithArtistReadDto
     {
         public int Id { get; set; }
         public string Title { get; set; }

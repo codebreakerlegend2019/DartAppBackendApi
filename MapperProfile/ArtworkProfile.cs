@@ -13,8 +13,10 @@ namespace DartAppSingapore.MapperProfile
         public ArtworkProfile()
         {
             CreateMap<Artwork, ArtworkSaveDto>();
-            CreateMap<ArtworkSaveDto, Artwork>();
-            CreateMap<Artwork, ArtworkReadDto>()
+            CreateMap<ArtworkUpdateDto, Artwork>()
+                .ForMember(x => x.Title, opt => opt.MapFrom(x => x.NewTitle))
+                .ForMember(x => x.Notes, opt => opt.MapFrom(x => x.NewNotes));
+            CreateMap<Artwork, ArtworkWithArtistReadDto>()
              .AfterMap((src, dest) =>
              {
                  dest.Artists = new List<ArtistWithoutArtworkReadDto>();
@@ -31,6 +33,7 @@ namespace DartAppSingapore.MapperProfile
                      });
                  }
              });
+            CreateMap<Artwork, ArtworkWithoutArtistReadDto>();
         }
     }
 }

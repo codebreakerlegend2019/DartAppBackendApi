@@ -24,7 +24,7 @@ namespace DartAppSingapore.Migrations
                 column: "ZoneId",
                 principalTable: "Zones",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.NoAction);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

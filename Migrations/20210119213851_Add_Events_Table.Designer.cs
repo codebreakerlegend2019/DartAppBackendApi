@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DartAppSingapore.Migrations
 {
     [DbContext(typeof(DartAppContext))]
-    [Migration("20210118120440_Add-Locations-Table")]
-    partial class AddLocationsTable
+    [Migration("20210119213851_Add_Events_Table")]
+    partial class Add_Events_Table
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -90,6 +90,33 @@ namespace DartAppSingapore.Migrations
                     b.ToTable("ArtWorks");
                 });
 
+            modelBuilder.Entity("DartAppSingapore.Models.Event", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("DateEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateStart")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateTimeCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Events");
+                });
+
             modelBuilder.Entity("DartAppSingapore.Models.Location", b =>
                 {
                     b.Property<int>("Id")
@@ -115,7 +142,12 @@ namespace DartAppSingapore.Migrations
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ZoneId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ZoneId");
 
                     b.ToTable("Locations");
                 });
@@ -156,6 +188,32 @@ namespace DartAppSingapore.Migrations
                     b.ToTable("Profiles");
                 });
 
+            modelBuilder.Entity("DartAppSingapore.Models.Venue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("DateTimeCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
+
+                    b.ToTable("Venues");
+                });
+
             modelBuilder.Entity("DartAppSingapore.Models.Zone", b =>
                 {
                     b.Property<int>("Id")
@@ -194,6 +252,28 @@ namespace DartAppSingapore.Migrations
                     b.Navigation("Artist");
 
                     b.Navigation("Artwork");
+                });
+
+            modelBuilder.Entity("DartAppSingapore.Models.Location", b =>
+                {
+                    b.HasOne("DartAppSingapore.Models.Zone", "Zone")
+                        .WithMany()
+                        .HasForeignKey("ZoneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Zone");
+                });
+
+            modelBuilder.Entity("DartAppSingapore.Models.Venue", b =>
+                {
+                    b.HasOne("DartAppSingapore.Models.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("DartAppSingapore.Models.Artist", b =>

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DartAppSingapore.Dtos.ArtworkDtos;
+using DartAppSingapore.Helpers;
 using DartAppSingapore.Interfaces;
 using DartAppSingapore.Models;
 using DartAppSingapore.Persistence.ArtworkRepositories;
@@ -25,7 +26,7 @@ namespace DartAppSingapore.Controllers
         #endregion
 
         #region Constructor
-        public ArtworkController(ICrud<Artwork> iCrudArtwork,IUnitOfWork unitOfWork,
+        public ArtworkController(ICrud<Artwork> iCrudArtwork, IUnitOfWork unitOfWork,
             IMapper mapper, IArtworkRepo artworkRepo)
         {
             this._iCrudArtwork = iCrudArtwork;
@@ -36,25 +37,88 @@ namespace DartAppSingapore.Controllers
         #endregion
 
         #region Endpoints
-        [HttpPost]
-        public async Task<IActionResult> Add ([FromBody] ArtworkSaveDto artworkDto)
+        /// <summary>
+        /// Create Artworks with Artists (Required to create Artists first!) 
+        /// </summary>
+        /// <param name="artworkDto"></param>
+        /// <returns></returns>
+        [HttpPost("create")]
+        public async Task<IActionResult> Add([FromBody] ArtworkSaveDto artworkDto)
         {
             var artWork = _mapper.Map<Artwork>(artworkDto);
             _iCrudArtwork.Create(artWork);
             if (!await _unitOfWork.SuccessSaveChangesAsync())
-                return BadRequest("Nothing has been Saved");
-            if (!await _artworkRepo.AddArtists(artworkDto.ArtistIds, artWork.Id)) 
-                return BadRequest("No ArtistArtwork Saved");
+                return BadRequest(ErrorHelper.PutError("Nothing has been Saved!"));
+            if (!await _artworkRepo.AddArtists(artworkDto.ArtistIds, artWork.Id))
+                return BadRequest(ErrorHelper.PutError("No Artists Added"));
             return StatusCode(201);
         }
-
+        /// <summary>
+        /// Get All Artworks with or without Artists
+        /// </summary>
+        /// <param name="isArtistsIncluded"></param>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] bool isArtistsIncluded)
         {
-            var artworks = await _iCrudArtwork.GetAll();
+            var artworks = await _iCrudArtwork.GetAll(isArtistsIncluded);
             if (artworks == null)
                 return NoContent();
-            return Ok(_mapper.Map<List<ArtworkReadDto>>(artworks));
+            return (isArtistsIncluded) ? Ok(_mapper.Map<List<ArtworkWithArtistReadDto>>(artworks)) :
+                Ok(_mapper.Map<List<ArtworkWithoutArtistReadDto>>(artworks));
+        }
+        /// <summary>
+        /// Get Artworks by id with or without Artists
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="isArtistsIncluded"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBydId([FromRoute] int id,[FromQuery] bool isArtistsIncluded)
+        {
+            var artwork = await _iCrudArtwork.Get(id,isArtistsIncluded);
+            if (artwork == null)
+                return NotFound();
+            return (isArtistsIncluded) ? Ok(_mapper.Map<ArtworkWithArtistReadDto>(artwork)) :
+                Ok(_mapper.Map<ArtworkWithoutArtistReadDto>(artwork));
+        }
+        /// <summary>
+        /// Update Artwork Informations 
+        /// </summary>
+        /// <param name="artworkUpdateDto"></param>
+        /// <returns></returns>
+        [HttpPut("update")]
+        public async Task<IActionResult> Update([FromBody] ArtworkUpdateDto artworkUpdateDto)
+        {
+            var artwork = await _iCrudArtwork.Get(artworkUpdateDto.ArtworkIdToUpdate,true);
+            if (artwork == null)
+                return NotFound();
+            _iCrudArtwork.Update(artworkUpdateDto, artwork);
+            if(!await _artworkRepo.DeleteArtistArtworkPairs(artwork.ArtistArtworks))
+                return BadRequest(ErrorHelper.PutError("Having Trouble Deleting Previous Artists"));
+            if (!await _artworkRepo.AddArtists(artworkUpdateDto.NewArtistIds, artworkUpdateDto.ArtworkIdToUpdate))
+                return BadRequest(ErrorHelper.PutError("Having Trouble Adding New Artists"));
+            if (!await _unitOfWork.SuccessSaveChangesAsync())
+                return BadRequest(ErrorHelper.PutError("Nothing has been Saved!"));
+            return Ok(artwork);
+        }
+        /// <summary>
+        /// Delete Artworks.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            var artwork = await _iCrudArtwork.Get(id,true);
+            if (artwork == null)
+                return NotFound();
+            _iCrudArtwork.Delete(artwork);
+            if (!await _artworkRepo.DeleteArtistArtworkPairs(artwork.ArtistArtworks))
+                return BadRequest(ErrorHelper.PutError("Having Trouble Deleting Previous Artists"));
+            if (!await _unitOfWork.SuccessSaveChangesAsync())
+                return BadRequest(ErrorHelper.PutError("Nothing has been Saved!"));
+            return Ok(artwork);
         }
         #endregion
     }

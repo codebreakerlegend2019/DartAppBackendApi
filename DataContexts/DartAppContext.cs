@@ -20,7 +20,7 @@ namespace DartAppSingapore.DataContexts
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<Artist> Artists { get; set; }
         public DbSet<Artwork> ArtWorks { get; set; }
-        public DbSet<ArtistArtwork> ArtistArtworks { get; set; } // Comment out everytime you migrate
+        public DbSet<ArtistArtwork> ArtistArtworks { get; set; } 
         public DbSet<Zone> Zones { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Venue> Venues { get; set; }

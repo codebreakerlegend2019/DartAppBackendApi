@@ -35,6 +35,11 @@ namespace DartAppSingapore.Controllers
         #endregion
 
         #region Endpoints
+        /// <summary>
+        /// Create Location
+        /// </summary>
+        /// <param name="locationSaveDto"></param>
+        /// <returns></returns>
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] LocationSaveDto locationSaveDto)
         {
@@ -44,7 +49,11 @@ namespace DartAppSingapore.Controllers
                 return BadRequest(ErrorHelper.PutError("Nothing has been saved!"));
             return StatusCode(201);
         }
-
+        /// <summary>
+        /// Get All Location w / w/out Zone
+        /// </summary>
+        /// <param name="isZoneIncluded"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] bool isZoneIncluded)
         {
@@ -54,6 +63,12 @@ namespace DartAppSingapore.Controllers
             return (isZoneIncluded) ? Ok(_mapper.Map<List<LocationWithZoneReadDto>>(locations)) :
                 Ok(_mapper.Map<List<LocationWithoutZoneReadDto>>(locations));
         }
+        /// <summary>
+        /// Get Location by id w/ w/out Zone
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="isZoneIncluded"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAll([FromRoute] int id, [FromQuery] bool isZoneIncluded)
         {
@@ -63,6 +78,11 @@ namespace DartAppSingapore.Controllers
             return (isZoneIncluded) ? Ok(_mapper.Map<LocationWithZoneReadDto>(location)) :
                 Ok(_mapper.Map<LocationWithoutZoneReadDto>(location));
         }
+        /// <summary>
+        /// Update Location
+        /// </summary>
+        /// <param name="locationUpdateDto"></param>
+        /// <returns></returns>
         [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] LocationUpdateDto locationUpdateDto)
         {
@@ -74,6 +94,11 @@ namespace DartAppSingapore.Controllers
                 return BadRequest(ErrorHelper.PutError("Nothing has been saved!"));
             return Ok(location);
         }
+        /// <summary>
+        /// Delete Location
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {

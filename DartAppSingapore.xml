@@ -4,5 +4,144 @@
         <name>DartAppSingapore</name>
     </assembly>
     <members>
+        <member name="M:DartAppSingapore.Controllers.ArtistController.Add(DartAppSingapore.Dtos.ArtistDtos.ArtistSaveDto)">
+            <summary>
+            Create Artists To Database
+            </summary>
+            <param name="artistDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.ArtistController.GetAll(System.Boolean)">
+            <summary>
+            Get All Artist with or without artworks
+            </summary>
+            <param name="isArtworksIncluded"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.ArtistController.GetById(System.Int32,System.Boolean)">
+            <summary>
+            Get Artist by id with or without artworks
+            </summary>
+            <param name="id"></param>
+            <param name="isArtworksIncluded"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.ArtistController.Update(DartAppSingapore.Dtos.ArtistDtos.ArtistUpdateDto)">
+            <summary>
+            Update Artist informations
+            </summary>
+            <param name="artistUpdateDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.ArtistController.Delete(System.Int32)">
+            <summary>
+            Delete Artist
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.ArtworkController.Add(DartAppSingapore.Dtos.ArtworkDtos.ArtworkSaveDto)">
+            <summary>
+            Create Artworks with Artists (Required to create Artists first!) 
+            </summary>
+            <param name="artworkDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.ArtworkController.GetAll(System.Boolean)">
+            <summary>
+            Get All Artworks with or without Artists
+            </summary>
+            <param name="isArtistsIncluded"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.ArtworkController.GetBydId(System.Int32,System.Boolean)">
+            <summary>
+            Get Artworks by id with or without Artists
+            </summary>
+            <param name="id"></param>
+            <param name="isArtistsIncluded"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.ArtworkController.Update(DartAppSingapore.Dtos.ArtworkDtos.ArtworkUpdateDto)">
+            <summary>
+            Update Artwork Informations 
+            </summary>
+            <param name="artworkUpdateDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.ArtworkController.Delete(System.Int32)">
+            <summary>
+            Delete Artworks.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.LocationController.Create(DartAppSingapore.Dtos.LocationDtos.LocationSaveDto)">
+            <summary>
+            Create Location
+            </summary>
+            <param name="locationSaveDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.LocationController.GetAll(System.Boolean)">
+            <summary>
+            Get All Location w / w/out Zone
+            </summary>
+            <param name="isZoneIncluded"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.LocationController.GetAll(System.Int32,System.Boolean)">
+            <summary>
+            Get Location by id w/ w/out Zone
+            </summary>
+            <param name="id"></param>
+            <param name="isZoneIncluded"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.LocationController.Update(DartAppSingapore.Dtos.LocationDtos.LocationUpdateDto)">
+            <summary>
+            Update Location
+            </summary>
+            <param name="locationUpdateDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.LocationController.Delete(System.Int32)">
+            <summary>
+            Delete Location
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.VenueController.Create(DartAppSingapore.Dtos.VenueDtos.VenueSaveDto)">
+            <summary>
+            </summary>
+            <param name="venueSaveDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.VenueController.GetAll(System.Boolean)">
+            <summary>
+            </summary>
+            <param name="isLocationIncluded"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.VenueController.GetAll(System.Int32,System.Boolean)">
+            <summary>
+            </summary>
+            <param name="id"></param>
+            <param name="isLocationIncluded"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.VenueController.Update(DartAppSingapore.Dtos.VenueDtos.VenueUpdateDto)">
+            <summary>
+            </summary>
+            <param name="venueUpdateDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DartAppSingapore.Controllers.VenueController.Delete(System.Int32)">
+            <summary>
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

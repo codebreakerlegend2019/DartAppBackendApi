@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DartAppSingapore.Migrations
 {
     [DbContext(typeof(DartAppContext))]
-    [Migration("20210118120651_Add_OneToOne_Zones_Locations")]
+    [Migration("20210119213223_Add_OneToOne_Zones_Locations")]
     partial class Add_OneToOne_Zones_Locations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

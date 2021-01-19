@@ -180,7 +180,7 @@ namespace DartAppSingapore.Migrations
                     b.Property<DateTime>("Birthdate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateTimeCreated")
+                    b.Property<DateTime>("DateTimCreated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
@@ -258,13 +258,13 @@ namespace DartAppSingapore.Migrations
                     b.HasOne("DartAppSingapore.Models.Artist", "Artist")
                         .WithMany("ArtistArtworks")
                         .HasForeignKey("ArtistId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("DartAppSingapore.Models.Artwork", "Artwork")
                         .WithMany("ArtistArtworks")
                         .HasForeignKey("ArtworkId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Artist");
@@ -277,13 +277,13 @@ namespace DartAppSingapore.Migrations
                     b.HasOne("DartAppSingapore.Models.Artwork", "Artwork")
                         .WithMany("ArtworkEvents")
                         .HasForeignKey("ArtworkId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("DartAppSingapore.Models.Event", "Event")
                         .WithMany("ArtworkEvents")
                         .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Artwork");
@@ -296,7 +296,7 @@ namespace DartAppSingapore.Migrations
                     b.HasOne("DartAppSingapore.Models.Venue", "Venue")
                         .WithMany()
                         .HasForeignKey("VenueId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Venue");
@@ -307,7 +307,7 @@ namespace DartAppSingapore.Migrations
                     b.HasOne("DartAppSingapore.Models.Zone", "Zone")
                         .WithMany()
                         .HasForeignKey("ZoneId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Zone");
@@ -318,7 +318,7 @@ namespace DartAppSingapore.Migrations
                     b.HasOne("DartAppSingapore.Models.Location", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Location");

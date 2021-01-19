@@ -33,6 +33,7 @@ namespace DartAppSingapore.Controllers
         }
         #endregion
         /// <summary>
+        /// Create a Venue
         /// </summary>
         /// <param name="venueSaveDto"></param>
         /// <returns></returns>
@@ -46,6 +47,7 @@ namespace DartAppSingapore.Controllers
             return StatusCode(201);
         }
         /// <summary>
+        /// Get All Venue with/ w/o Location
         /// </summary>
         /// <param name="isLocationIncluded"></param>
         /// <returns></returns>
@@ -59,6 +61,7 @@ namespace DartAppSingapore.Controllers
                 : Ok(_mapper.Map<List<VenueWithoutLocationReadDto>>(venues));
         }
         /// <summary>
+        /// Get Venue By Id with/ w/o Location
         /// </summary>
         /// <param name="id"></param>
         /// <param name="isLocationIncluded"></param>
@@ -73,6 +76,7 @@ namespace DartAppSingapore.Controllers
                 : Ok(_mapper.Map<VenueWithoutLocationReadDto>(venue));
         }
         /// <summary>
+        /// Update Venue
         /// </summary>
         /// <param name="venueUpdateDto"></param>
         /// <returns></returns>
@@ -88,6 +92,7 @@ namespace DartAppSingapore.Controllers
             return Ok(venue);
         }
         /// <summary>
+        /// Delete a Venue
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

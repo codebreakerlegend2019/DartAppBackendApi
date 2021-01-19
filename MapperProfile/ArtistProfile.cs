@@ -13,9 +13,13 @@ namespace DartAppSingapore.MapperProfile
     {
         public ArtistProfile()
         {
-            CreateMap<ArtistSaveDto, Artist>();
+            CreateMap<ArtistUpdateDto, Artist>()
+                .ForMember(x => x.Code, opt => opt.MapFrom(x => x.NewCode))
+                .ForMember(x => x.FirstName, opt => opt.MapFrom(x => x.NewFirstName))
+                .ForMember(x => x.LastName, opt => opt.MapFrom(x => x.NewLastName))
+                .ForMember(x => x.Birthdate, opt => opt.MapFrom(x => x.NewBirthdate));
             CreateMap<Artist, ArtistSaveDto>();
-            CreateMap<Artist, ArtistReadDto>()
+            CreateMap<Artist, ArtistWithArtworkReadDto>()
              .AfterMap((src, dest) => 
              {
                  dest.Artworks = new List<ArtworkWithoutArtistReadDto>();

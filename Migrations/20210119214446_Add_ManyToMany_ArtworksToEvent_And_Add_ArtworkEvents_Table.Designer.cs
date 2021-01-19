@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DartAppSingapore.Migrations
 {
     [DbContext(typeof(DartAppContext))]
-    [Migration("20210119151311_Add_ManyToMany_ArtworksToEvent_And_Add_ArtworkEvents_Table")]
+    [Migration("20210119214446_Add_ManyToMany_ArtworksToEvent_And_Add_ArtworkEvents_Table")]
     partial class Add_ManyToMany_ArtworksToEvent_And_Add_ArtworkEvents_Table
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
