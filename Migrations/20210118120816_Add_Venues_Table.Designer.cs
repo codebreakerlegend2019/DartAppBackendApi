@@ -4,14 +4,16 @@ using DartAppSingapore.DataContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DartAppSingapore.Migrations
 {
     [DbContext(typeof(DartAppContext))]
-    partial class DartAppContextModelSnapshot : ModelSnapshot
+    [Migration("20210118120816_Add_Venues_Table")]
+    partial class Add_Venues_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,7 +63,7 @@ namespace DartAppSingapore.Migrations
 
                     b.HasIndex("ArtistId");
 
-                    b.ToTable("ArtistArtwork");
+                    b.ToTable("ArtistArtworks");
                 });
 
             modelBuilder.Entity("DartAppSingapore.Models.Artwork", b =>
@@ -86,53 +88,6 @@ namespace DartAppSingapore.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ArtWorks");
-                });
-
-            modelBuilder.Entity("DartAppSingapore.Models.ArtworkEvent", b =>
-                {
-                    b.Property<int>("ArtworkId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ArtworkId", "EventId");
-
-                    b.HasIndex("EventId");
-
-                    b.ToTable("ArtworkEvent");
-                });
-
-            modelBuilder.Entity("DartAppSingapore.Models.Event", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("DateEnd")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateStart")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DateTimeCreated")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("VenueId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("VenueId");
-
-                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("DartAppSingapore.Models.Location", b =>
@@ -219,15 +174,10 @@ namespace DartAppSingapore.Migrations
                     b.Property<bool>("IsEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<int>("LocationId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LocationId");
 
                     b.ToTable("Venues");
                 });
@@ -272,36 +222,6 @@ namespace DartAppSingapore.Migrations
                     b.Navigation("Artwork");
                 });
 
-            modelBuilder.Entity("DartAppSingapore.Models.ArtworkEvent", b =>
-                {
-                    b.HasOne("DartAppSingapore.Models.Artwork", "Artwork")
-                        .WithMany("ArtworkEvents")
-                        .HasForeignKey("ArtworkId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DartAppSingapore.Models.Event", "Event")
-                        .WithMany("ArtworkEvents")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Artwork");
-
-                    b.Navigation("Event");
-                });
-
-            modelBuilder.Entity("DartAppSingapore.Models.Event", b =>
-                {
-                    b.HasOne("DartAppSingapore.Models.Venue", "Venue")
-                        .WithMany()
-                        .HasForeignKey("VenueId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Venue");
-                });
-
             modelBuilder.Entity("DartAppSingapore.Models.Location", b =>
                 {
                     b.HasOne("DartAppSingapore.Models.Zone", "Zone")
@@ -313,17 +233,6 @@ namespace DartAppSingapore.Migrations
                     b.Navigation("Zone");
                 });
 
-            modelBuilder.Entity("DartAppSingapore.Models.Venue", b =>
-                {
-                    b.HasOne("DartAppSingapore.Models.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Location");
-                });
-
             modelBuilder.Entity("DartAppSingapore.Models.Artist", b =>
                 {
                     b.Navigation("ArtistArtworks");
@@ -332,13 +241,6 @@ namespace DartAppSingapore.Migrations
             modelBuilder.Entity("DartAppSingapore.Models.Artwork", b =>
                 {
                     b.Navigation("ArtistArtworks");
-
-                    b.Navigation("ArtworkEvents");
-                });
-
-            modelBuilder.Entity("DartAppSingapore.Models.Event", b =>
-                {
-                    b.Navigation("ArtworkEvents");
                 });
 #pragma warning restore 612, 618
         }

@@ -4,14 +4,16 @@ using DartAppSingapore.DataContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DartAppSingapore.Migrations
 {
     [DbContext(typeof(DartAppContext))]
-    partial class DartAppContextModelSnapshot : ModelSnapshot
+    [Migration("20210118121249_Add_Events_Table")]
+    partial class Add_Events_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,7 +63,7 @@ namespace DartAppSingapore.Migrations
 
                     b.HasIndex("ArtistId");
 
-                    b.ToTable("ArtistArtwork");
+                    b.ToTable("ArtistArtworks");
                 });
 
             modelBuilder.Entity("DartAppSingapore.Models.Artwork", b =>
@@ -88,21 +90,6 @@ namespace DartAppSingapore.Migrations
                     b.ToTable("ArtWorks");
                 });
 
-            modelBuilder.Entity("DartAppSingapore.Models.ArtworkEvent", b =>
-                {
-                    b.Property<int>("ArtworkId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ArtworkId", "EventId");
-
-                    b.HasIndex("EventId");
-
-                    b.ToTable("ArtworkEvent");
-                });
-
             modelBuilder.Entity("DartAppSingapore.Models.Event", b =>
                 {
                     b.Property<int>("Id")
@@ -125,12 +112,7 @@ namespace DartAppSingapore.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VenueId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("VenueId");
 
                     b.ToTable("Events");
                 });
@@ -272,36 +254,6 @@ namespace DartAppSingapore.Migrations
                     b.Navigation("Artwork");
                 });
 
-            modelBuilder.Entity("DartAppSingapore.Models.ArtworkEvent", b =>
-                {
-                    b.HasOne("DartAppSingapore.Models.Artwork", "Artwork")
-                        .WithMany("ArtworkEvents")
-                        .HasForeignKey("ArtworkId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DartAppSingapore.Models.Event", "Event")
-                        .WithMany("ArtworkEvents")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Artwork");
-
-                    b.Navigation("Event");
-                });
-
-            modelBuilder.Entity("DartAppSingapore.Models.Event", b =>
-                {
-                    b.HasOne("DartAppSingapore.Models.Venue", "Venue")
-                        .WithMany()
-                        .HasForeignKey("VenueId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Venue");
-                });
-
             modelBuilder.Entity("DartAppSingapore.Models.Location", b =>
                 {
                     b.HasOne("DartAppSingapore.Models.Zone", "Zone")
@@ -332,13 +284,6 @@ namespace DartAppSingapore.Migrations
             modelBuilder.Entity("DartAppSingapore.Models.Artwork", b =>
                 {
                     b.Navigation("ArtistArtworks");
-
-                    b.Navigation("ArtworkEvents");
-                });
-
-            modelBuilder.Entity("DartAppSingapore.Models.Event", b =>
-                {
-                    b.Navigation("ArtworkEvents");
                 });
 #pragma warning restore 612, 618
         }
