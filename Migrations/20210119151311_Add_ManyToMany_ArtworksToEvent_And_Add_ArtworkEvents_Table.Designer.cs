@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DartAppSingapore.Migrations
 {
     [DbContext(typeof(DartAppContext))]
-    [Migration("20210118121453_Add_OneToOne_Event_Venue")]
-    partial class Add_OneToOne_Event_Venue
+    [Migration("20210119151311_Add_ManyToMany_ArtworksToEvent_And_Add_ArtworkEvents_Table")]
+    partial class Add_ManyToMany_ArtworksToEvent_And_Add_ArtworkEvents_Table
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,7 +63,7 @@ namespace DartAppSingapore.Migrations
 
                     b.HasIndex("ArtistId");
 
-                    b.ToTable("ArtistArtworks");
+                    b.ToTable("ArtistArtwork");
                 });
 
             modelBuilder.Entity("DartAppSingapore.Models.Artwork", b =>
@@ -90,6 +90,21 @@ namespace DartAppSingapore.Migrations
                     b.ToTable("ArtWorks");
                 });
 
+            modelBuilder.Entity("DartAppSingapore.Models.ArtworkEvent", b =>
+                {
+                    b.Property<int>("ArtworkId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ArtworkId", "EventId");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("ArtworkEvent");
+                });
+
             modelBuilder.Entity("DartAppSingapore.Models.Event", b =>
                 {
                     b.Property<int>("Id")
@@ -103,8 +118,8 @@ namespace DartAppSingapore.Migrations
                     b.Property<DateTime>("DateStart")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DateTimeCreated")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DateTimeCreated")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsEnabled")
                         .HasColumnType("bit");
@@ -259,6 +274,25 @@ namespace DartAppSingapore.Migrations
                     b.Navigation("Artwork");
                 });
 
+            modelBuilder.Entity("DartAppSingapore.Models.ArtworkEvent", b =>
+                {
+                    b.HasOne("DartAppSingapore.Models.Artwork", "Artwork")
+                        .WithMany("ArtworkEvents")
+                        .HasForeignKey("ArtworkId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DartAppSingapore.Models.Event", "Event")
+                        .WithMany("ArtworkEvents")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Artwork");
+
+                    b.Navigation("Event");
+                });
+
             modelBuilder.Entity("DartAppSingapore.Models.Event", b =>
                 {
                     b.HasOne("DartAppSingapore.Models.Venue", "Venue")
@@ -300,6 +334,13 @@ namespace DartAppSingapore.Migrations
             modelBuilder.Entity("DartAppSingapore.Models.Artwork", b =>
                 {
                     b.Navigation("ArtistArtworks");
+
+                    b.Navigation("ArtworkEvents");
+                });
+
+            modelBuilder.Entity("DartAppSingapore.Models.Event", b =>
+                {
+                    b.Navigation("ArtworkEvents");
                 });
 #pragma warning restore 612, 618
         }

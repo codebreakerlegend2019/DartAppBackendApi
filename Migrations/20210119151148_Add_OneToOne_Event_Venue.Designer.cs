@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DartAppSingapore.Migrations
 {
     [DbContext(typeof(DartAppContext))]
-    [Migration("20210118121249_Add_Events_Table")]
-    partial class Add_Events_Table
+    [Migration("20210119151148_Add_OneToOne_Event_Venue")]
+    partial class Add_OneToOne_Event_Venue
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -103,8 +103,8 @@ namespace DartAppSingapore.Migrations
                     b.Property<DateTime>("DateStart")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DateTimeCreated")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DateTimeCreated")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsEnabled")
                         .HasColumnType("bit");
@@ -112,7 +112,12 @@ namespace DartAppSingapore.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("VenueId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("VenueId");
 
                     b.ToTable("Events");
                 });
@@ -252,6 +257,17 @@ namespace DartAppSingapore.Migrations
                     b.Navigation("Artist");
 
                     b.Navigation("Artwork");
+                });
+
+            modelBuilder.Entity("DartAppSingapore.Models.Event", b =>
+                {
+                    b.HasOne("DartAppSingapore.Models.Venue", "Venue")
+                        .WithMany()
+                        .HasForeignKey("VenueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Venue");
                 });
 
             modelBuilder.Entity("DartAppSingapore.Models.Location", b =>

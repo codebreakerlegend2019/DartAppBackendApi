@@ -116,8 +116,8 @@ namespace DartAppSingapore.Migrations
                     b.Property<DateTime>("DateStart")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DateTimeCreated")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DateTimeCreated")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsEnabled")
                         .HasColumnType("bit");

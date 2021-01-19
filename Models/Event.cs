@@ -14,7 +14,7 @@ namespace DartAppSingapore.Models
         public DateTime DateEnd { get; set; }
         public int VenueId { get; set; }
         public virtual Venue Venue { get; set; }
-        public string DateTimeCreated { get; set; }
+        public DateTime DateTimeCreated { get; set; }
         public bool IsEnabled { get; set; }
         public virtual ICollection<ArtworkEvent> ArtworkEvents { get; set; }
         public Event()

@@ -16,7 +16,7 @@ namespace DartAppSingapore.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateStart = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateTimeCreated = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateTimeCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsEnabled = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -24,6 +24,7 @@ namespace DartAppSingapore.Migrations
                     table.PrimaryKey("PK_Events", x => x.Id);
                 });
         }
+
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
