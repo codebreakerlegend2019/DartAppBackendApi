@@ -50,8 +50,14 @@ namespace DartAppSingapore
                 c.SwaggerDoc("v1",
                     new OpenApiInfo
                     {
-                        Title = "Dart App ni Eunice REST API",
-                        Version = "v1"
+                        Title = "Dart App Backend ni Eunice REST API",
+                        Version = "v1",
+                        Contact = new OpenApiContact()
+                        {
+                            Name = "Joshua Siuagan",
+                            Url = new Uri("https://github.com/codebreakerlegend2019"),
+                            Email = "joshuasiuagan0406@gmail.com",
+                        }
                     });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.XML";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
