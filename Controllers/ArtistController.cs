@@ -3,6 +3,7 @@ using DartAppSingapore.Dtos.ArtistDtos;
 using DartAppSingapore.Helpers;
 using DartAppSingapore.Interfaces;
 using DartAppSingapore.Models;
+using DartAppSingapore.Persistence.ArtistRepositories;
 using DartAppSingapore.Persistence.UnitOfWorkRepositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,15 +22,17 @@ namespace DartAppSingapore.Controllers
         private readonly ICrud<Artist> _iCrudArtist;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IArtistRepo _artistRepo;
         #endregion
 
         #region Constructor
         public ArtistController(ICrud<Artist> iCrudArtist, IMapper mapper,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,IArtistRepo artistRepo)
         {
             this._iCrudArtist = iCrudArtist;
             this._mapper = mapper;
             this._unitOfWork = unitOfWork;
+            _artistRepo = artistRepo;
         }
         #endregion
 
@@ -103,10 +106,12 @@ namespace DartAppSingapore.Controllers
             var artist = await _iCrudArtist.Get(id,true);
             if (artist == null)
                 return NotFound();
+            if(artist.ArtistArtworks.Any())
+                 _artistRepo.DeleteArtistArtoworkPairs(artist.ArtistArtworks);
             _iCrudArtist.Delete(artist);
             if (!await _unitOfWork.SuccessSaveChangesAsync())
                 return BadRequest(ErrorHelper.PutError("Nothing has been deleted!"));
-            return Ok(artist);
+            return Ok(_mapper.Map<ArtistWithoutArtworkReadDto>(artist));
         }
         #endregion
     }

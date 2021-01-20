@@ -6,7 +6,7 @@ namespace DartAppSingapore.Persistence.ArtworkRepositories
 {
     public interface IArtworkRepo
     {
-        Task<bool> AddArtists(List<int> artistIds, int artWorkId);
-        Task<bool> DeleteArtistArtworkPairs(ICollection<ArtistArtwork> artistArtworks);
+        Task AddArtists(List<int> artistIds, int artWorkId);
+        void DeleteArtistArtworkPairs(ICollection<ArtistArtwork> artistArtworks);
     }
 }

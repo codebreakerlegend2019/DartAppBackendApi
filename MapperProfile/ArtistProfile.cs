@@ -18,7 +18,8 @@ namespace DartAppSingapore.MapperProfile
                 .ForMember(x => x.FirstName, opt => opt.MapFrom(x => x.NewFirstName))
                 .ForMember(x => x.LastName, opt => opt.MapFrom(x => x.NewLastName))
                 .ForMember(x => x.Birthdate, opt => opt.MapFrom(x => x.NewBirthdate));
-            CreateMap<Artist, ArtistSaveDto>();
+            CreateMap<ArtistSaveDto, Artist>();
+            CreateMap<Artist, ArtistWithoutArtworkReadDto>();
             CreateMap<Artist, ArtistWithArtworkReadDto>()
              .AfterMap((src, dest) => 
              {

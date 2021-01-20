@@ -58,7 +58,7 @@ namespace DartAppSingapore.Controllers
         public async Task<IActionResult> GetAll([FromQuery] bool isZoneIncluded)
         {
             var locations = await _iCrudLocation.GetAll(isZoneIncluded);
-            if (locations == null)
+            if (!locations.Any())
                 return NoContent();
             return (isZoneIncluded) ? Ok(_mapper.Map<List<LocationWithZoneReadDto>>(locations)) :
                 Ok(_mapper.Map<List<LocationWithoutZoneReadDto>>(locations));

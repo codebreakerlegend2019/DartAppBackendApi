@@ -36,7 +36,7 @@ namespace DartAppSingapore.Validators.LocationValidators
             RuleFor(x => x.ZoneId)
                 .MustAsync(async (zoneId, cancellation) =>
                 {
-                    var isExisted = await context.Locations
+                    var isExisted = await context.Zones
                        .AnyAsync(x => x.Id == zoneId);
                     return isExisted;
                 })

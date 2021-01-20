@@ -28,22 +28,12 @@ namespace DartAppSingapore.Persistence.ArtworkRepositories
             _mapper = mapper;
         }
 
-        #region Methods
+        #region ICrud Methods
 
-        public async Task<bool> AddArtists(List<int> artistIds, int artWorkId)
-        {
-            foreach (var artistId in artistIds)
-            {
-                var isArtistExist = await _iCrudArtist.Get(artistId) != null;
-                if (isArtistExist)
-                    _context.Add(new ArtistArtwork() { ArtworkId = artWorkId, ArtistId = artistId });
-            }
-            return await _context.SaveChangesAsync()>0;
-        }
-        public async Task<bool> DeleteArtistArtworkPairs(ICollection<ArtistArtwork> artistArtworks)
+
+        public void DeleteArtistArtworkPairs(ICollection<ArtistArtwork> artistArtworks)
         {
             _context.RemoveRange(artistArtworks);
-            return await _context.SaveChangesAsync() > 0;
         }
         public void Create(Artwork model)
         {
@@ -79,6 +69,17 @@ namespace DartAppSingapore.Persistence.ArtworkRepositories
         public void Update(object newUpdate, Artwork modelToBeUpdated)
         {
             _mapper.Map(newUpdate, modelToBeUpdated);
+        }
+        #endregion
+        #region ArtworkRepo Methods
+        public async Task AddArtists(List<int> artistIds, int artWorkId)
+        {
+            foreach (var artistId in artistIds)
+            {
+                var isArtistExist = await _iCrudArtist.Get(artistId) != null;
+                if (isArtistExist)
+                    _context.Add(new ArtistArtwork() { ArtworkId = artWorkId, ArtistId = artistId });
+            }
         }
         #endregion
     }

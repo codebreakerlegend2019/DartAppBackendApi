@@ -47,10 +47,9 @@ namespace DartAppSingapore.Controllers
         {
             var artWork = _mapper.Map<Artwork>(artworkDto);
             _iCrudArtwork.Create(artWork);
+            await _artworkRepo.AddArtists(artworkDto.ArtistIds, artWork.Id);
             if (!await _unitOfWork.SuccessSaveChangesAsync())
                 return BadRequest(ErrorHelper.PutError("Nothing has been Saved!"));
-            if (!await _artworkRepo.AddArtists(artworkDto.ArtistIds, artWork.Id))
-                return BadRequest(ErrorHelper.PutError("No Artists Added"));
             return StatusCode(201);
         }
         /// <summary>
@@ -94,13 +93,11 @@ namespace DartAppSingapore.Controllers
             if (artwork == null)
                 return NotFound();
             _iCrudArtwork.Update(artworkUpdateDto, artwork);
-            if(!await _artworkRepo.DeleteArtistArtworkPairs(artwork.ArtistArtworks))
-                return BadRequest(ErrorHelper.PutError("Having Trouble Deleting Previous Artists"));
-            if (!await _artworkRepo.AddArtists(artworkUpdateDto.NewArtistIds, artworkUpdateDto.ArtworkIdToUpdate))
-                return BadRequest(ErrorHelper.PutError("Having Trouble Adding New Artists"));
+            _artworkRepo.DeleteArtistArtworkPairs(artwork.ArtistArtworks);
+            await _artworkRepo.AddArtists(artworkUpdateDto.NewArtistIds, artworkUpdateDto.ArtworkIdToUpdate);
             if (!await _unitOfWork.SuccessSaveChangesAsync())
                 return BadRequest(ErrorHelper.PutError("Nothing has been Saved!"));
-            return Ok(artwork);
+            return Ok(_mapper.Map<ArtworkWithArtistReadDto>(artwork));
         }
         /// <summary>
         /// Delete Artworks.
@@ -113,12 +110,12 @@ namespace DartAppSingapore.Controllers
             var artwork = await _iCrudArtwork.Get(id,true);
             if (artwork == null)
                 return NotFound();
+            if (artwork.ArtistArtworks.Any())
+                _artworkRepo.DeleteArtistArtworkPairs(artwork.ArtistArtworks);
             _iCrudArtwork.Delete(artwork);
-            if (!await _artworkRepo.DeleteArtistArtworkPairs(artwork.ArtistArtworks))
-                return BadRequest(ErrorHelper.PutError("Having Trouble Deleting Previous Artists"));
             if (!await _unitOfWork.SuccessSaveChangesAsync())
                 return BadRequest(ErrorHelper.PutError("Nothing has been Saved!"));
-            return Ok(artwork);
+            return Ok(_mapper.Map<ArtworkWithoutArtistReadDto>(artwork));
         }
         #endregion
     }
