@@ -6,6 +6,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -84,6 +85,11 @@ namespace DartAppSingapore
                 };
             })
             .AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<Startup>());
+
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dartappcms/build";
+            });
         }
         
 
@@ -98,13 +104,13 @@ namespace DartAppSingapore
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Dart App ni Eunice REST API");
-                c.RoutePrefix = string.Empty;
             });
+            app.UseStaticFiles();
+            app.UseSpaStaticFiles();
+            app.UseSwagger();
             app.UseRouting();
 
             app.UseAuthorization();
@@ -114,6 +120,15 @@ namespace DartAppSingapore
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp/dartappcms";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseReactDevelopmentServer(npmScript: "start");
+                }
             });
         }
     }
